@@ -39,6 +39,9 @@
   let tgdbSearchByHash = true;
   let tgdbSearchByName = true;
   let tgdbActive = false;
+
+  let searchByHash = true;
+  let searchByName = true;
   
   let apiCounts = {};
 
