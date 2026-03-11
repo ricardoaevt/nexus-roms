@@ -49,11 +49,15 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libayatana-appindicator3-dev pkg-config build-essential
+          # Create a local pkg-config directory to redirect 4.0 to 4.1
+          mkdir -p $HOME/pkgconfig
+          cp /usr/lib/x86_64-linux-gnu/pkgconfig/webkit2gtk-4.1.pc $HOME/pkgconfig/webkit2gtk-4.0.pc
 
       - name: Build Wails App
         shell: bash
         run: |
           export PATH=$PATH:$(go env GOPATH)/bin
+          export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$HOME/pkgconfig
           export GOFLAGS="-tags=webkit2gtk_41"
           wails build -platform ${{ matrix.platform }} -clean -tags webkit2gtk_41
 
@@ -79,5 +83,6 @@ jobs:
         with:
           files: |
             *.zip
+            *.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
