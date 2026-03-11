@@ -24,26 +24,46 @@ Nexus ROMs is a high-performance desktop application built with **Wails** and **
 ### Prerequisites
 
 To compile Nexus ROMs from source, you will need:
+
 - **Go** (1.24 or higher)
 - **Node.js** (v20+) & **NPM**
-- **Wails CLI** (`go install github.com/wailsapp/wails/v2/cmd/wails@latest`)
+- **Wails CLI**: Install via `go install github.com/wailsapp/wails/v2/cmd/wails@latest`
+- **C Compiler**: Required for SQLite (e.g., GCC on Linux, MingW on Windows).
 
-### Installation & Development
+### 🔑 API Configuration
+
+To use the identification features, you will need accounts from these providers:
+
+1. **ScreenScraper**: Register at [screenscraper.fr](https://www.screenscraper.fr/).
+2. **TheGamesDB**: Get an API key at [thegamesdb.net](https://thegamesdb.net/).
+
+Once you have your credentials, enter them in the **Settings** tab within the application.
+
+### 🏗️ Installation & Development
 
 1. Clone the repository:
+
    ```bash
-   git clone https://github.com/YOUR_USERNAME/nexus-roms.git
+   git clone https://github.com/ricardoaevt/nexus-roms.git
    cd nexus-roms
    ```
 
-2. Run in development mode (Live Reload):
+2. Install dependencies:
+
+   ```bash
+   wails doctor
+   ```
+
+3. Run in development mode (Live Reload):
+
    ```bash
    wails dev
    ```
 
-### 🏗️ Building for Production
+### 🔨 Building for Production
 
 Generate a production-ready binary for your current OS:
+
 ```bash
 wails build
 ```
@@ -52,24 +72,34 @@ The compiled binary will be located in the `build/bin` directory.
 
 ## 📦 Automated Releases
 
-This repository includes a **GitHub Actions** workflow that automatically compiles and packages the application for **Windows, Linux, and macOS** whenever a new tag (e.g., `v1.0.0`) is pushed.
+This repository is configured with **GitHub Actions** to automatically build and package the application for **Windows, Linux, and macOS**. 
 
-Detailed instructions for downloading pre-compiled binaries can be found in the [Releases](https://github.com/YOUR_USERNAME/nexus-roms/releases) section.
+**To trigger a new release:**
+
+1. Update the version in `wails.json`.
+2. Create and push a tag:
+
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+The binaries will appear in the [Releases](https://github.com/ricardoaevt/nexus-roms/releases) section once the workflow finishes.
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Go (Wails Bridged)
-- **Frontend**: Svelte / TypeScript
-- **Database**: SQLite (CGO-free via `modernc.org/sqlite`)
-- **Cryptography**: AES-256-GCM for credential protection
+- **Backend**: Go 1.24+
+- **Frontend**: Svelte
+- **Database**: SQLite (Encrypted)
+- **Framework**: [Wails v2](https://wails.io/)
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is personal software. See the [LICENSE](LICENSE) file for details.
+1. Fork the Project.
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the Branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
 ---
-*Developed with focus on speed, aesthetics, and user experience.*
+*Developed with focus on speed, aesthetics, and user experience for the Retro Gaming Community.*
