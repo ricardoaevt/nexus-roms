@@ -16,7 +16,7 @@ jobs:
         include:
           - build-name: nexus-roms-linux
             platform: linux/amd64
-            os: ubuntu-22.04
+            os: ubuntu-latest
           - build-name: nexus-roms-windows
             platform: windows/amd64
             os: windows-latest
@@ -48,13 +48,13 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev pkg-config build-essential
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libayatana-appindicator3-dev pkg-config build-essential
 
       - name: Build Wails App
         shell: bash
         run: |
           export PATH=$PATH:$(go env GOPATH)/bin
-          wails build -platform ${{ matrix.platform }} -clean
+          wails build -platform ${{ matrix.platform }} -clean -tags webkit2gtk_41
 
       - name: Package Windows
         if: runner.os == 'Windows'
@@ -64,7 +64,9 @@ jobs:
       - name: Package Linux
         if: runner.os == 'Linux'
         run: |
+          chmod +x build/bin/nexus-roms
           zip -j nexus-roms-linux.zip build/bin/nexus-roms
+          tar -czf nexus-roms-linux.tar.gz -C build/bin nexus-roms
 
       - name: Package macOS
         if: runner.os == 'macOS'
