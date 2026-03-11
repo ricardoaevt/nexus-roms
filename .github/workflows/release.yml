@@ -16,7 +16,7 @@ jobs:
         include:
           - build-name: nexus-roms-linux
             platform: linux/amd64
-            os: ubuntu-latest
+            os: ubuntu-24.04
           - build-name: nexus-roms-windows
             platform: windows/amd64
             os: windows-latest
@@ -54,6 +54,7 @@ jobs:
         shell: bash
         run: |
           export PATH=$PATH:$(go env GOPATH)/bin
+          export GOFLAGS="-tags=webkit2gtk_41"
           wails build -platform ${{ matrix.platform }} -clean -tags webkit2gtk_41
 
       - name: Package Windows
