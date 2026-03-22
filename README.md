@@ -102,22 +102,30 @@ The binaries will appear in the [Releases](https://github.com/ricardoaevt/nexus-
 Nexus ROMs goes beyond simple renaming by implementing advanced decision-making logic:
 
 ### 1. Smart Archive Filtering
+
 The system automatically evaluates the contents of compressed files (`.zip`, `.rar`, `.7z`):
+
 - **Scenario**: If an archive contains multiple unrelated ROMs (e.g., a "100-in-1" pack), it is flagged as a *romset* and skipped to prevent cluttering.
 - **Scenario**: If multiple files share a similar base name (e.g., "Game Disc 1" and "Game Disc 2"), the system recognizes them as parts of a single title and proceeds with identification.
 
 ### 2. Intelligent Collision Handling
+
 To prevent data loss and maintain backup integrity:
+
 - **Scenario**: When a target filename already exists, the system doesn't overwrite it. Instead, it moves the source file to a dedicated `duplicados/` folder.
 - **Scenario**: The original path structure is recreated inside `duplicados/` to ensure you know exactly where each file originated.
 
 ### 3. API Quota Management
+
 For providers with daily or monthly limits like ScreenScraper:
+
 - **Scenario**: The system tracks the current month and the number of requests made.
 - **Scenario**: At the start of a new month, the counter automatically resets to ensure accurate tracking against your subscription tier.
 
 ### 4. Robust Error Reporting
+
 At the end of every batch operation, a detailed summary is displayed:
+
 - **Scenario**: Files locked by the OS or permission issues are gracefully logged and presented in a final report, allowing you to troubleshoot without stopping the entire process.
 
 ## 🤝 Contributing
