@@ -1,6 +1,8 @@
 # Nexus ROMs
 
-![Status](https://img.shields.io/badge/Status-Development-orange)
+![Status](https://img.shields.io/badge/Status-Beta-blue)
+![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen)
+![Coverage](https://img.shields.io/badge/Coverage-74.8%25-green)
 ![Go](https://img.shields.io/badge/Go-1.24+-00ADD8?logo=go)
 ![Wails](https://img.shields.io/badge/Wails-v2-red)
 ![Svelte](https://img.shields.io/badge/Frontend-Svelte-ff3e00?logo=svelte)
@@ -18,6 +20,8 @@ Nexus ROMs is a high-performance desktop application built with **Wails** and **
 - **💎 Premium UI**: A reactive, dark-mode dashboard providing real-time logs, live identification tables, and progress statistics.
 - **🔒 Security First**: API credentials and personal data are securely stored and handled.
 - **📦 Wide Compression Support**: Native handling of `.zip`, `.rar`, and `.7z` archives.
+- **🛡️ Smart Filtering**: Automatic detection and skipping of massive romsets to focus on high-quality single titles.
+- **📉 API Quota Tracking**: Persistent monthly tracking of ScreenScraper requests to stay within tier limits.
 
 ## 🚀 Getting Started
 
@@ -93,13 +97,59 @@ The binaries will appear in the [Releases](https://github.com/ricardoaevt/nexus-
 - **Database**: SQLite (Encrypted)
 - **Framework**: [Wails v2](https://wails.io/)
 
+## 🔄 Workflow & Smart Logic
+
+Nexus ROMs goes beyond simple renaming by implementing advanced decision-making logic:
+
+### 1. Smart Archive Filtering
+The system automatically evaluates the contents of compressed files (`.zip`, `.rar`, `.7z`):
+- **Scenario**: If an archive contains multiple unrelated ROMs (e.g., a "100-in-1" pack), it is flagged as a *romset* and skipped to prevent cluttering.
+- **Scenario**: If multiple files share a similar base name (e.g., "Game Disc 1" and "Game Disc 2"), the system recognizes them as parts of a single title and proceeds with identification.
+
+### 2. Intelligent Collision Handling
+To prevent data loss and maintain backup integrity:
+- **Scenario**: When a target filename already exists, the system doesn't overwrite it. Instead, it moves the source file to a dedicated `duplicados/` folder.
+- **Scenario**: The original path structure is recreated inside `duplicados/` to ensure you know exactly where each file originated.
+
+### 3. API Quota Management
+For providers with daily or monthly limits like ScreenScraper:
+- **Scenario**: The system tracks the current month and the number of requests made.
+- **Scenario**: At the start of a new month, the counter automatically resets to ensure accurate tracking against your subscription tier.
+
+### 4. Robust Error Reporting
+At the end of every batch operation, a detailed summary is displayed:
+- **Scenario**: Files locked by the OS or permission issues are gracefully logged and presented in a final report, allowing you to troubleshoot without stopping the entire process.
+
 ## 🤝 Contributing
 
 1. Fork the Project.
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`).
 4. Push to the Branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
+
+## 🧪 Testing & Quality
+
+Nexus ROMs is committed to high software quality. Our backend suite ensures critical logic remains robust.
+
+| Package | Coverage | Status |
+| :--- | :--- | :--- |
+| `internal/renamer` | 90.9% | ✅ Robust |
+| `internal/orchestrator` | 76.8% | ✅ Tested |
+| `internal/scraper` | 70.6% | ✅ Tested |
+| `internal/db` | 81.7% | ✅ Robust |
+| `internal/crypto` | 75.9% | ✅ Secure |
+
+To run the tests:
+
+```bash
+make test # Runs all unit tests
+```
+
+To view coverage:
+
+```bash
+make coverage # Generates and opens HTML report
+```
 
 ---
 *Developed with focus on speed, aesthetics, and user experience for the Retro Gaming Community.*

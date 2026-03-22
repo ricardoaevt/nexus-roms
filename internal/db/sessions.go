@@ -41,7 +41,7 @@ func (db *DB) CreateSession(rootPath string) (int64, error) {
 }
 
 func (db *DB) GetLatestSession() (*Session, error) {
-	query := `SELECT id, root_path, status, created_at, updated_at FROM sessions ORDER BY created_at DESC LIMIT 1`
+	query := `SELECT id, root_path, status, created_at, updated_at FROM sessions ORDER BY id DESC LIMIT 1`
 	row := db.Conn.QueryRow(query)
 
 	var s Session

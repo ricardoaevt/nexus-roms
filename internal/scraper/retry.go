@@ -21,7 +21,7 @@ func NewRetryScraper(inner Scraper, maxRetries int, baseDelay time.Duration) *Re
 }
 
 func (r *RetryScraper) Name() string {
-	return r.inner.Name()
+	return fmt.Sprintf("Retry(%s)", r.inner.Name())
 }
 
 func (r *RetryScraper) CanSearchByHash() bool {
